@@ -1,0 +1,7 @@
+#success result of user query with error object
+union UserResult = UserData | GraphqlError
+
+#user query by email
+type Query {
+  searchUser(email: String!): UserResult!
+}

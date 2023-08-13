@@ -1,0 +1,6 @@
+  type File {
+    originalname: String!
+    mimetype: String!
+    encoding: String!
+    location: String!
+  }

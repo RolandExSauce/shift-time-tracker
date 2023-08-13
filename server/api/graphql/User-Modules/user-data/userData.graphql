@@ -1,0 +1,14 @@
+type User {
+  personalNumber: String!
+  password: String!
+  employeeRole: UserRole!
+  teamLeaderName: String!
+  userDepartment: ValidDepartment!
+  firstName: String!
+  lastName: String!
+
+  #optional
+  displayName: String
+  avatar: String
+  schedule: [SchedulePlan]
+}

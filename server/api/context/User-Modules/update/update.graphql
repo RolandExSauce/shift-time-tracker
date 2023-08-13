@@ -1,0 +1,10 @@
+input updateInput {
+  oldEmail: String!
+  newRole: Role!
+  newUsername: String!
+  newEmail: String!
+}
+
+type Mutation {
+  updateUser(updateInput: updateInput!): UserData!
+}

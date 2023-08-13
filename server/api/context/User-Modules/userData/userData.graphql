@@ -1,0 +1,10 @@
+#schema for our user
+type UserData {
+  profilId: String!
+  role: Role!
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+  verified: Boolean # FIXME: DO WE NEED THIS? 
+}

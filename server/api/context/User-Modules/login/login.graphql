@@ -1,0 +1,18 @@
+# # Type Defs for login
+
+# input loginInput {
+#   email: String!
+#   password: String!
+# }
+
+# type LoginResponse {
+#   accessToken: String!
+#   user: UserData!
+# }
+
+# union LoginResult = LoginResponse | GraphqlError
+
+# type Mutation {
+#   loginUser(loginInput: loginInput!): LoginResult
+# }
+

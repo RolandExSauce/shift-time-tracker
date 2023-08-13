@@ -1,0 +1,15 @@
+#typeDefs to create a user
+union CreateUserResult = User | GraphqlError
+
+input createUserInput {
+  password: String!
+  employeeRole: UserRole!
+  teamLeaderName: String!
+  userDepartment: ValidDepartment!
+  firstName: String!
+  lastName: String!
+}
+
+type Mutation {
+  createUser(createUserInput: createUserInput!): CreateUserResult!
+}

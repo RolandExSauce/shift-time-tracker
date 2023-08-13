@@ -1,0 +1,13 @@
+type SchedulePlan {
+  year: DateCustom
+  month: DateCustom
+  WeekSchedule: [DaySchedule]
+}
+
+type DaySchedule {
+  weekday: DateCustom
+  startShift: DateCustom
+  endShift: DateCustom
+  employeeIsAbsent: Boolean
+  absentReason: CheckIfDayOff
+}

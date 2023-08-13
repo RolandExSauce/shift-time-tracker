@@ -1,0 +1,36 @@
+# success result of all users in society
+type UsersSuccessSoc {
+  socUsers: [User!]!
+}
+
+# will be a list of list cuz different departments (=> multiple arrays)
+type UsersSuccessDep {
+  depUsers: [User!]!
+}
+
+# success result of users in departments
+type DepartmentsSuccessSoc {
+  departments: [Department!]!
+}
+
+# Return all users in society or all users in each department or error object
+union GetUsersResultSoc = UsersSuccessSoc | GraphqlError
+union GetUsersResultDep = UsersSuccessDep | GraphqlError
+
+# Return all departments or error object
+union GetDepartmentsResult = DepartmentsSuccessSoc | GraphqlError
+
+# all users in society
+type Query {
+GETUsersSOC: GetUsersResultSoc
+}
+
+# all users in each department
+type Query {
+  GETUsersDEP: GetUsersResultDep
+}
+
+# all departments in society
+type Query {
+  GETDepartmentsSOC: GetDepartmentsResult
+}

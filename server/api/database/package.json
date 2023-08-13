@@ -1,0 +1,20 @@
+{
+  "name": "my-prisma-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma-concat": "npx ts-node prisma/concat-schemas.ts && npx prisma format",
+    "generate": "yarn prisma-concat && npx prisma generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "add": "^2.0.6",
+    "prisma": "^5.0.0",
+    "yarn": "^1.22.19"
+  }
+}

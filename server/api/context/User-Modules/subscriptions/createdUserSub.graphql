@@ -1,0 +1,5 @@
+# user subscriptions
+
+type Subscription {
+  newUser: UserData!
+}

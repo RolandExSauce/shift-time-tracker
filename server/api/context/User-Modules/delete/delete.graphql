@@ -1,0 +1,5 @@
+# TypeDefs for user deletion
+
+type Mutation {
+  deleteUser(profilId: String!): UserData!
+}

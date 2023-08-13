@@ -1,0 +1,9 @@
+PRISMA SCHEMA: relation mongoDB and
+
+cannot create department model ????
+
+
+FIXME: REMOVE ARR OF IDS in PRISMA SCHEMA; ref => createUserResolver.tsx line 30
+
+
+import { DateResolver } from "graphql-scalars";

@@ -1,0 +1,10 @@
+# TypeDefs for tokens
+
+type Query {
+  refreshAccessToken: TokenResponse!
+}
+
+type TokenResponse {
+  status: String!
+  access_token: String!
+}

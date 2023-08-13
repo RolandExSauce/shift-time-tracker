@@ -1,0 +1,12 @@
+# success result of users query
+type UsersSuccess {
+  users: [UserData!]!
+}
+
+# Return all users or error object ###############################
+union GetUsersResult = UsersSuccess | GraphqlError
+
+#user query 
+type Query {
+  users: GetUsersResult
+}

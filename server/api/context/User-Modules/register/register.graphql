@@ -1,0 +1,16 @@
+#typeDefs when someone registers
+
+union RegisterResult = UserData | GraphqlError
+
+input registerInput {
+  profilId: String!
+  role: Role!
+  username: String!
+  email: String!
+  password: String!
+  avatar: String
+}
+
+type Mutation {
+  registerUser(registerInput: registerInput!): RegisterResult!
+}
