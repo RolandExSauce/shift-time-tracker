@@ -1,5 +1,0 @@
-# TypeDefs current user
-
-type Query {
-  getCurrentUser: UserData!
-}

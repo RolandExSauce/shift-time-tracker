@@ -1,0 +1,246 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+Type DeviceConfigStatus, will technical intel on the device, is in DB? last used firmwarefile, etc.
+"""
+type DeviceConfigStatus {
+  lastTimeFirmwareUpgraded: String!
+  lastTimeSDKRestored: String!
+  lastTimeDataModified: String!
+  lastUpgradedFirmwareVersionFile: String
+  lastUploadedSDKFile: String
+  deviceIsInDB: Boolean!
+  importedFromCSV: Boolean!
+}
+
+"""
+Type DeviceWithMoreInfo to match SuperRouterModel (extends BaseRouterModel) entity for db mapping
+"""
+type DeviceWithMoreInfo {
+  modell: DeviceModell!
+  wifiSSID: String!
+  webUser: String!
+  shellUser: String!
+  passForShellUser: String!
+  passForWebUser: String!
+  passWifi: String!
+  configStatus: DeviceConfigStatus!
+  serialNumber: String
+  SIMID: String
+  IMEI: String
+  LAN_MAC: String
+  ipAdress: String
+}
+
+"""all available device models"""
+enum DeviceModell {
+  RUT200
+  RUT230
+  RUT240
+  RUT260
+  RUT300
+  RUT360
+  RUT901
+  RUT906
+  RUT950
+  RUT951
+  RUT955
+  RUT956
+}
+
+"""Type User to match User entity for db mapping"""
+type User {
+  username: String!
+  password: String!
+  role: UserRole!
+  userDep: UserDepartment
+}
+
+"""all available roles for users"""
+enum UserRole {
+  ADMIN
+  HELPER
+  VIEWER
+}
+
+"""all user departments"""
+enum UserDepartment {
+  IT
+  HR
+  OTHERS
+}
+
+type Query {
+  """get all users query, will return GetUsersResponse"""
+  getUsers: GetUsersResponse!
+
+  """"""
+  getDevices: GetDevicesResponse!
+  backupDATA: String!
+  searchDeviceSpecific(SSIDToSearch: String!): String!
+}
+
+"""union GetUsersResult, will return UsersSuccess or GraphqlError"""
+union GetUsersResponse = UsersSuccess | GraphqlError
+
+"""Type UsersSuccess, will return array of User Objects"""
+type UsersSuccess {
+  users: [User!]!
+}
+
+"""
+Type GraphqlError, with customError field of type Scalar String, to return custom defined errors
+"""
+type GraphqlError {
+  customError: String!
+}
+
+"""union GetDevicesResponse, will return DevicesSuccess or GraphqlError"""
+union GetDevicesResponse = DevicesSuccess | GraphqlError
+
+"""Type DevicesSuccess, will return array of Device Objects"""
+type DevicesSuccess {
+  devices: [DeviceWithMoreInfo!]!
+}
+
+type Mutation {
+  """mutation to create user, will return CreatedUserResponse"""
+  loginUser(loginInput: LoginInput!): TokenResponse!
+
+  """mutation to create user, will return CreatedUserResponse"""
+  createUser(createInput: CreateUserInput!): CreatedUserResponse!
+
+  """mutation to update user, will return UpdatedUserResponse"""
+  updateUser(updateInput: UpdateUserInput!): UpdatedUserResponse!
+
+  """mutation to delete user, will return DeletedUserResponse"""
+  deleteUser(usernameOfToDeleteUser: String!): DeletedUserResponse!
+  configAndMaybeAddDeviceInDB(deviceConfigInput: DeviceConfigInput!): ConfigDeviceResult!
+  updateDeviceData(updateDeviceInput: UpdateDeviceInput!): String!
+  deleteOneOrManyDevices(oneOrMoreSSIDToDelete: [String!]!): String!
+}
+
+"""union TokenResponse will return UserResponse or GraphqlError"""
+union TokenResponse = UserResponse | GraphqlError
+
+"""Type UserResponse, return User Obj with accesstoken"""
+type UserResponse {
+  user: User!
+  accessToken: String!
+}
+
+"""Input type, input fields to pass when login in"""
+input LoginInput {
+  username: String!
+  password: String!
+}
+
+"""union CreatedUserResult, will return Success msg or GraphqlError"""
+union CreatedUserResponse = Success | GraphqlError
+
+"""
+Type Success, with successMsg field of type Scalar String, returns success msg based on successfull operations
+"""
+type Success {
+  successMsg: String!
+}
+
+"""Input type, input fields to pass when creating new user"""
+input CreateUserInput {
+  username: String!
+  password: String!
+  role: UserRole!
+  userDep: UserDepartment = OTHERS
+}
+
+"""union UpdatedUserResult, will return Success msg or GraphqlError"""
+union UpdatedUserResponse = Success | GraphqlError
+
+"""Input type, new input fields to pass when updating user"""
+input UpdateUserInput {
+  usernameOfToUpdateUser: String!
+  newUsername: String
+  newPassword: String
+  newRole: UserRole
+  newUserDep: UserDepartment
+}
+
+"""union DeleteUserResult, will return Success msg or GraphqlError"""
+union DeletedUserResponse = Success | GraphqlError
+
+"""
+union ConfigDeviceResult, will return StatusAfterConfig or GraphqlError
+"""
+union ConfigDeviceResult = StatusAfterConfig | GraphqlError
+
+"""
+Type StatusAfterConfig, will show us the current technical intels on the device after config was done
+"""
+type StatusAfterConfig {
+  statusAfterConfig: DeviceConfigStatus
+  successMsg: String
+}
+
+"""
+Input type DeviceConfigInput, all input fields to pass when configuring a new device, embedded types (subtypes), like DeviceInfo is part of it
+"""
+input DeviceConfigInput {
+  generateNewCredentials: Boolean!
+  kindOfConfig: ConfigOptions!
+  deviceInfo: DeviceInfo!
+}
+
+"""distinguish between three different config options"""
+enum ConfigOptions {
+  Option1
+  Option2
+  Option3
+}
+
+"""
+Input type DeviceInfo, input fields to pass when configuring a new device, some are optionals
+"""
+input DeviceInfo {
+  modell: DeviceModell!
+  wifiSSID: String!
+  webUser: String!
+  shellUser: String!
+  passForShellUser: String!
+  passForWebUser: String!
+  passWifi: String!
+  serialNumber: String
+  SIMID: String
+  IMEI: String
+  LAN_MAC: String
+  ipAdress: String
+}
+
+"""
+Input type UpdateDeviceInput, all input fields to pass when updating device's data, embedded types (subtypes), like NewDeviceConfigStatusInput is part of it
+"""
+input UpdateDeviceInput {
+  wifiSSIDOfDeviceToUpdate: String!
+  newModell: DeviceModell
+  newWifiSSID: String
+  newWebUser: String
+  newShellUser: String
+  newPassForWebUser: String
+  newPassForShellUser: String
+  newPassWifi: String
+  newConfigStatus: NewDeviceConfigStatusInput
+}
+
+"""
+Input type NewDeviceConfigStatusInput, input fields to pass when updating device's config status data
+"""
+input NewDeviceConfigStatusInput {
+  NewLastTimeFirmwareUpgraded: String!
+  NewLastTimeSDKRestored: String!
+  NewLastTimeDataModified: String!
+  NewLastUpgradedFirmwareVersionFile: String
+  NewLastUploadedSDKFile: String
+  NewDeviceIsInDB: Boolean!
+  NewImportedFromCSV: Boolean!
+}

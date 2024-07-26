@@ -1,9 +1,0 @@
-input updateFileInput {
-  filename: String!
-  mimetype: String!
-  encoding: String!
-}
-
-type Mutation {
-  updateFile(updateFileInput: Upload!): File
-}

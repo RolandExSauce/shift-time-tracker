@@ -1,9 +1,0 @@
-{
-  "start:dev": "npx nodemon",
-  "watch": ["api"],
-  "ext": ".ts,.js",
-  "ignore": [],
-  "exec": "npx ts-node ./api/server.ts"
-}
-
-

@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//TODO: BEFORE INSERT, HASH PASSWORD ?
+
+// User model 
+model User {
+  id              String         @id @default(cuid())
+  username        String         @unique
+  password        String
+  role            Role
+  teamLeaderNames String[]
+  myDepartment  MyDepartment
+  firstName       String
+  lastName        String
+  schedules       SchedulePlan[]
+
+  department   Department @relation(fields: [departmentId], references: [id])
+  departmentId Int
+
+  @@map("users")
+}
+
+// One of many departments in a society, e.g., IT Department
+model Department {
+  id              Int            @id @default(autoincrement())
+  departmentName  MyDepartment @unique
+  departmentUsers User[]
+
+  @@map("departments")
+}
+
+// Model for user schedule plan
+model SchedulePlan {
+  id           String        @id @default(cuid())
+  year         Int
+  month        Int
+  weekSchedule DaySchedule[]
+  user         User          @relation(fields: [userId], references: [id]) //
+  userId       String
+
+  @@map("user_schedules")
+}
+
+// Subtype schedule plan day 
+model DaySchedule {
+  id                 String       @id @default(cuid())
+  workDate           DateTime
+  startShift         DateTime
+  endShift           DateTime
+  shiftStatus        ShiftStatus
+  ifAbsentThenReason AbsentReason @default(IS_PRESENT)
+
+  schedulePlan   SchedulePlan @relation(fields: [schedulePlanId], references: [id]) //one to many from SchedulePlan to DaySchedule
+  schedulePlanId String
+}
+
+// Enum types 
+enum Role {
+  USER
+  ADMIN
+}
+
+// Status of worker shift
+enum ShiftStatus {
+  WORKING
+  SHIFT_COMPLETED //the shift is done
+  SHIFT_NOT_COMPLETED //the shift was not done 
+  SHIFT_PARTIALLY_COMPLETED //the shift was done but some issues occured, e.g user had to go home early cuz of sickness 
+  // => intervention of an admin user required to correct end time of user shift (Will be notified)
+}
+
+// If user was absent
+enum AbsentReason {
+  IS_PRESENT
+  URLAUB
+  KRANKENSTAND
+  SONSTIGES
+}
+
+// Add more departments here if needed
+enum MyDepartment {
+  IT
+  VK
+  HR
+}
